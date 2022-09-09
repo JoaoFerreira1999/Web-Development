@@ -1,0 +1,76 @@
+// const { MongoClient } = require('mongodb');
+// // or as an es module:
+// // import { MongoClient } from 'mongodb'
+//
+// // Connection URL
+// const url = 'mongodb://localhost:27017';
+// const client = new MongoClient(url);
+//
+// // Database Name
+// const dbName = 'fruitsDB';
+//
+// async function main() {
+//   // Use connect method to connect to the server
+//   await client.connect();
+//   console.log('Connected successfully to server');
+//   const db = client.db(dbName);
+//   const collection = db.collection('documents');
+//
+//   // the following code examples can be pasted here...
+//
+//   insertResult();
+//   return 'done.';
+//
+// }
+//
+//
+// const insertResult = function(){
+//     await collection.insertMany([
+//     { name: "Apple",
+//       score: 7,
+//       review: "Ok fruit"
+//     },
+//     { name: "Orange",
+//       score: 9,
+//       review: "Juicy fruit"
+//     },
+//     { name: "Banana",
+//       score: 8,
+//       review: "Great Alrounder"
+//     }
+//   ]);
+//   console.log('Inserted documents =>', insertResult);
+// }
+// 
+// main()
+//   .then(console.log)
+//   .catch(console.error)
+//   .finally(() => client.close());
+
+
+
+
+const { MongoClient } = require("mongodb");
+
+// Replace the uri string with your connection string.
+const uri =
+  "mongodb+srv://newuser321:newuser321@cluster0.zk7dgas.mongodb.net/?retryWrites=true&w=majority";
+
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    const database = client.db('sample_mflix');
+    const movies = database.collection('movies');
+
+    // Query for a movie that has the title 'Back to the Future'
+    const query = { title: 'Back to the Future' };
+    const movie = await movies.findOne(query);
+
+    console.log(movie);
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
